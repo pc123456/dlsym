@@ -10,9 +10,7 @@ std::string  extract_file_name(std::string filepath)
     if(pos == std::string::npos){
         return "";
     }
-    
     std::string strret =  filepath.substr(pos, std::string::npos);
-
     return strret;
 }
 
