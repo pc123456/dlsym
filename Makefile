@@ -14,7 +14,7 @@ SHARED_ALL_NAME = $(BIN_LIB_DIR)/$(SHARED_NAME).$(SHARED_MAJOR).$(SHARED_MINOR)
 
 SHARED_LDFLAGS = -shared
 SHARED_CFLAGS = -fPIC -fvisibility=hidden
-LIBSOURCES=./lib/src/libtest.cpp  ./lib/src/strlib.c
+LIBSOURCES=./lib/src/libtest.cpp  ./lib/src/strlib.cpp
 
 TEST_BIN_NAME = tstld
 TEST_BIN_ALL_NAME = $(BIN_DIR)/$(TEST_BIN_NAME)

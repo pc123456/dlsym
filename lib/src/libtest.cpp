@@ -3,7 +3,7 @@
 
 uint32_t  gainresult(uint32_t  _first,  uint32_t _seconde)
 {
-    return  _first + _seconde + RTMP_ctrlC;
+    return  _first + _seconde ;
 }
 
 uint32_t  rmresult(uint32_t _first,  uint32_t  _seconde)
