@@ -1,6 +1,9 @@
 #include "ilibtest.h"
 
 #define  SO_PATH "../lib/libtest.so.1.0"
+#define  MIX_MAJOR_VERSION 1
+#define  MIX_MINOR_VERSION 0 
+
 ilibtest::ilibtest(): _hso(NULL){}
 
 ilibtest::~ilibtest()
@@ -13,16 +16,37 @@ ilibtest::~ilibtest()
 
 bool  ilibtest::loadso()
 {
-    if(NULL != _hso){
-        return true;
+    bool bret = false;
+
+    do{
+        if(NULL != _hso){
+            return true;
+        }
+        _hso = dlopen(SO_PATH, RTLD_LAZY);
+        if(NULL == _hso){
+            perror(dlerror());
+            break;
+        }
+        int major = 0;
+        int minor = 0;
+        std::string  strver;
+        if(false == get_so_version(major,  minor,  strver)){
+            perror("get_so_version fail..");
+            break;
+        }
+        if(major < MIX_MAJOR_VERSION || (major == MIX_MAJOR_VERSION && minor < MIX_MINOR_VERSION)){
+           perror("version of so is low...");
+            break;
+        }
+        bret = true;
+
+    }while(false);
+
+    if(false == bret && NULL != _hso){
+        dlclose(_hso);
+        _hso = NULL;
     }
-    _hso = dlopen(SO_PATH, RTLD_LAZY);
-    if(NULL == _hso)
-    {
-        char * err = dlerror();
-        perror(err);
-    }
-    return NULL != _hso;
+    return bret;
 }
 
 bool  ilibtest::gainresult(uint32_t  _first,  uint32_t _seconde, uint32_t &_result)
@@ -53,7 +77,23 @@ bool ilibtest::rmresult(uint32_t _first,  uint32_t  _seconde, uint32_t &_result)
         return false;
     }
     _result =  pfngainresult(_first, _seconde);
+   
     return true;
 }
 
+bool   ilibtest::get_so_version(int& _major, int& _minor,  std::string& _ver)
+{
+     if(false == loadso()){
+        return false;
+    }
+    typedef void  (*fnget_so_version)(int& _major, int& _minor,  std::string& _ver);
+    fnget_so_version pfnget_so_version = (fnget_so_version)dlsym(_hso,  "get_so_version");
+    if(NULL ==  pfnget_so_version){
+        perror(dlerror());
+        return false;
+    }
+    pfnget_so_version(_major, _minor, _ver);
+    return true;
+
+}
 ilibtest gilibtest; 

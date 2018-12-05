@@ -15,6 +15,12 @@
 #ifndef API_EXPORT
 #define API_EXPORT  __attribute__((visibility("default")))
 #endif
+struct version_t{
+    int major;
+    int minor;
+    std::string strver;
+};
+typedef  version_t   *lpversion_t;
 
 #ifdef __cplusplus
 extern "C"
@@ -24,6 +30,8 @@ extern "C"
 API_EXPORT uint32_t  gainresult(uint32_t  _first,  uint32_t _seconde);
 
 API_EXPORT uint32_t  rmresult(uint32_t _first,  uint32_t  _seconde);
+
+API_EXPORT void  get_so_version(int& _major, int& _minor,  std::string& _ver);
 
 extern  char  strversion[ PATH_MAX ] API_EXPORT;
 

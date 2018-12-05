@@ -1,6 +1,6 @@
 
 CC = g++ 
-CFLAGS = -Wall  -g
+CFLAGS = -Wall  -g3
 
 INC_DIR = -I.
 LIB_DIR = -L/usr/local/lib  

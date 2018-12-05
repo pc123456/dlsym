@@ -15,7 +15,8 @@ class ilibtest
     
     bool   gainresult(uint32_t  _first,  uint32_t _seconde, uint32_t &_result);
     bool   rmresult(uint32_t _first,  uint32_t  _seconde, uint32_t &_result);
-
+    
+    bool   get_so_version(int& _major, int& _minor,  std::string& _ver);
     private:
     bool  loadso();
     void *_hso; 
