@@ -17,12 +17,12 @@ char  strversion[ PATH_MAX ]  = "this is dll";
 
 __attribute__((constructor)) void befor_main()
 {
-    printf("befor main at momment");
+    printf("befor main at momment...\n");
 }
 
 __attribute__((destructor)) void  after_main()
 {
-    printf("after main at momment");
+    printf("after main at mommen...\n");
 }
 
 uint32_t multresult(uint32_t _first,  uint32_t _seconde)
